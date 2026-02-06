@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Jessie Math - 遺蹟修復師</title>
+
+  <meta name="description" content="© 2025–2026 Jessie Math 捷析老師. All rights reserved.">
+  
+  <meta property="og:title" content="Jessie Math - 遺蹟修復師 ">
+  <meta property="og:description" content="© 2025–2026 Jessie Math 捷析老師. All rights reserved.">
+  <meta property="og:type" content="website">
+
+  <meta property="og:image" content="g6-u15-2.png">
+  <meta property="og:image:width" content="1024">
+  <meta property="og:image:height" content="1536">
+  <meta property="og:image:alt" content="Jessie Math 遊戲封面">
+
+  <link rel="image_src" href="g6-u15-2.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Jessie Math - 遺蹟修復師 ">
+  <meta name="twitter:description" content="© 2025–2026 Jessie Math 捷析老師. All rights reserved.">
+  <meta name="twitter:image" content="g6-u15-2.png">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sand: {
+              100: '#fdf6e3',
+              200: '#eee8d5',
+              800: '#5c5240',
+              900: '#2b261e',
+            },
+            rust: {
+              500: '#d97706', // 琥珀鏽色
+              600: '#b45309',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* 全局字體與背景 */
+    body {
+      font-family: 'Fredoka', sans-serif;
+      /* 沙漠風暴背景 */
+      background-color: #d6d3d1; /* stone-300 */
+      background-image: url('https://www.transparenttextures.com/patterns/dust.png'), linear-gradient(160deg, #e7e5e4 0%, #a8a29e 100%);
+      color: #292524; /* stone-800 */
+      background-attachment: fixed;
+    }
+
+    /* =========================================
+       HERO / HEADER (品牌識別)
+       ========================================= */
+    .brand-header {
+      background-color: rgba(255, 255, 255, 0.95);
+      border-bottom: 1px solid #e7e5e4;
+      padding: 0.5rem 1rem;
+      box-shadow: 0 4px 10px -2px rgba(120, 113, 108, 0.2);
+    }
+    @media (min-width: 768px) {
+      .brand-header { padding: 0.75rem 1.5rem; }
+    }
+
+    .logo-circle {
+      width: 45px; height: 45px;
+      border: 3px solid #f59e0b; /* 亮黃橘 */
+      border-radius: 50%;
+      background-color: transparent;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; margin-right: 10px;
+      flex-shrink: 0;
+    }
+    @media (min-width: 768px) {
+      .logo-circle { width: 55px; height: 55px; margin-right: 12px; }
+    }
+
+    .logo-img { width: 90%; height: auto; object-fit: contain; }
+
+    .brand-title {
+      font-size: 1.5rem; font-weight: 800; color: #1c1917; letter-spacing: 0.5px;
+    }
+    @media (min-width: 768px) { .brand-title { font-size: 2rem; } }
+
+    /* 導覽按鈕 */
+    .nav-pill {
+      display: flex; align-items: center; gap: 0.4rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 9999px;
+      font-weight: 700; font-size: 0.85rem;
+      transition: all 0.2s ease; text-decoration: none; white-space: nowrap;
+    }
+    @media (min-width: 768px) {
+      .nav-pill { padding: 0.5rem 1.25rem; font-size: 1rem; gap: 0.5rem; }
+    }
+
+    .nav-pill-default {
+      background-color: #fafaf9; border: 1px solid #d6d3d1; color: #57534e;
+    }
+    .nav-pill-default:hover {
+      background-color: #f5f5f4; color: #1c1917; border-color: #a8a29e;
+    }
+
+    .nav-pill-active {
+      background-color: #f3e8ff; border: 1px solid #7c3aed; color: #6d28d9;
+    }
+    .nav-pill-active:hover { background-color: #e9d5ff; }
+
+
+    /* =========================================
+       遊戲本體 (沙漠/焦土風格)
+       ========================================= */
+    .sand-panel {
+      background: rgba(41, 37, 36, 0.85); /* stone-800 */
+      backdrop-filter: blur(8px);
+      border-radius: 1rem;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+      border: 2px solid rgba(214, 211, 209, 0.2); /* stone-300 alpha */
+      color: #f5f5f4;
+    }
+    
+    .btn-sand {
+      transition: all 0.2s;
+      box-shadow: 0 4px 0 rgba(0,0,0,0.3); 
+      border: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      top: 0;
+    }
+    .btn-sand:active { 
+      transform: translateY(4px); 
+      box-shadow: 0 0 0 rgba(0,0,0,0.3); 
+    }
+    .btn-sand:disabled {
+      opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none;
+    }
+
+    .combo-text { animation: pop .3s cubic-bezier(.175,.885,.32,1.275); }
+    @keyframes pop { 0% {transform: scale(1)} 50% {transform: scale(1.5)} 100% {transform: scale(1)} }
+
+    .correct-anim { background-color: #166534 !important; color: #dcfce7 !important; border-color: #22c55e !important; }
+    .wrong-anim { background-color: #991b1b !important; color: #fee2e2 !important; border-color: #ef4444 !important; }
+
+    .scene-chip {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .25rem .6rem;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fdba74; /* orange-300 */
+      font-weight: 700; font-size: 0.75rem;
+      letter-spacing: .05em;
+    }
+
+    .shape-box {
+      width: 100%; max-width: 280px;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #44403c 0%, #292524 100%);
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 0 0 1px #57534e;
+      padding: 20px; margin: 0 auto;
+      position: relative;
+    }
+    .shape-box::after {
+      content: ""; position: absolute; top:0; left:0; right:0; bottom:0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.1) 3px);
+      pointer-events: none; border-radius: 12px;
+    }
+    
+    .progress-bar-bg { width: 100%; height: 8px; background: #1c1917; border-radius: 4px; overflow: hidden; border: 1px solid #44403c; }
+    .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #d97706, #fbbf24); width: 0%; transition: width 0.5s ease; }
+    
+    h1 { font-size: 1.75rem; line-height: 1.2; }
+    @media (min-width: 768px) { h1 { font-size: 2.5rem; } }
+
+    /* =========================================
+       FOOTER STYLES
+       ========================================= */
+    footer {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 1.5rem 1rem;
+        margin-top: auto;
+        position: relative;
+        z-index: 40;
+    }
+
+    .footer-pill {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(28, 25, 23, 0.95); /* stone-900 */
+        border: 1px solid #57534e; /* stone-600 */
+        padding: 0.75rem 1.5rem;
+        border-radius: 1.5rem;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        backdrop-filter: blur(4px);
+        font-size: 0.75rem;
+        color: #d6d3d1; /* stone-300 */
+        text-align: center;
+        max-width: 95%;
+    }
+
+    @media (min-width: 768px) {
+        .footer-pill {
+            flex-direction: row;
+            gap: 2rem;
+            border-radius: 9999px;
+            padding: 0.5rem 1.5rem;
+            text-align: left;
+        }
+    }
+
+    .footer-left, .footer-right {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        justify-content: center;
+    }
+
+    .footer-dot {
+        width: 6px;
+        height: 6px;
+        background-color: #f59e0b; /* amber-500 */
+        border-radius: 50%;
+        box-shadow: 0 0 8px rgba(245, 158, 11, 0.6);
+        flex-shrink: 0;
+    }
+
+    .footer-icon {
+        color: #f59e0b;
+        font-size: 0.85rem;
+    }
+
+    .footer-copy, .footer-tagline {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    @media (max-width: 767px) {
+        .footer-copy, .footer-tagline {
+            white-space: normal;
+        }
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+<header class="brand-header w-full flex justify-between items-center sticky top-0 z-50">
+  <div class="flex items-center select-none">
+    <div class="logo-circle">
+      <img src="JESSIEMATH-Q.png" alt="Logo" class="logo-img"
+           onerror="this.style.display='none'; this.parentNode.style.backgroundColor='#fbbf24'; this.parentNode.innerHTML='<span style=\'font-weight:bold; color:#78350f\'>JM</span>'">
+    </div>
+    <span class="brand-title hidden min-[350px]:inline">Jessie Math</span>
+  </div>
+
+  <div class="flex gap-2 items-center justify-end">
+    <a href="https://jessiemath0703-chu.github.io/website2/" class="nav-pill nav-pill-default">
+      <i class="fas fa-home"></i> <span class="hidden sm:inline">首頁</span>
+    </a>
+    <a href="https://jessiemath0703-chu.github.io/Game-Lobby/" class="nav-pill nav-pill-default">
+      <i class="fas fa-gamepad"></i> <span class="hidden sm:inline">遊戲大廳</span>
+    </a>
+    <a href="https://jessiemath0703-chu.github.io/Game-Lobby/#g6-u15" class="nav-pill nav-pill-active">
+      <i class="fas fa-reply"></i> <span class="hidden sm:inline">角柱與圓柱</span><span class="sm:hidden">回單元</span>
+    </a>
+  </div>
+</header>
+
+<main class="flex-grow flex justify-center items-center p-4 relative overflow-y-auto z-10">
+  
+  <div class="absolute top-20 left-10 text-stone-600 opacity-20 text-8xl md:text-9xl rotate-12 pointer-events-none"><i class="fas fa-dungeon"></i></div>
+  <div class="absolute bottom-10 right-5 text-stone-600 opacity-20 text-8xl md:text-9xl -rotate-12 pointer-events-none"><i class="fas fa-cube"></i></div>
+
+  <div id="start-screen" class="sand-panel w-full max-w-4xl p-6 md:p-8 flex flex-col md:flex-row gap-8 animate-fade-in relative z-20">
+    <div class="flex-1 space-y-4 md:space-y-6">
+      <h1 class="font-bold text-amber-500 border-b-2 border-stone-600 pb-3 inline-block">
+        <i class="fas fa-wind"></i> 焦土迷宮：幾何試煉
+      </h1>
+
+      <p class="text-stone-300 text-sm md:text-lg leading-relaxed">
+        這裡是一片荒蕪的幾何沙漠。古老的防護罩因為計算錯誤而崩塌，沙塵暴即將來襲。
+        <br>你需要修復這些<b>柱體裝置</b>，計算正確的<span class="text-orange-400">體積</span>與<span class="text-emerald-400">表面積</span>，才能重啟防護網。
+      </p>
+
+      <div class="bg-stone-900/50 p-4 rounded-lg border-l-4 border-amber-600">
+        <label class="block text-stone-400 font-bold mb-2 text-sm">輸入倖存者代號:</label>
+        <input type="text" id="player-name"
+               class="w-full p-3 rounded bg-stone-800 border border-stone-600 text-white focus:outline-none focus:border-amber-500 transition"
+               placeholder="例如: Runner01">
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+        <button onclick="selectDifficulty('normal')" class="btn-sand bg-stone-600 hover:bg-stone-500 text-white font-bold py-3 md:py-4 rounded-lg">
+          <div class="text-lg md:text-xl"><i class="fas fa-shoe-prints"></i> 普通模式</div>
+          <div class="text-xs opacity-75 mt-1">90秒｜適合探索</div>
+        </button>
+        <button onclick="selectDifficulty('hard')" class="btn-sand bg-rust-600 hover:bg-rust-500 text-white font-bold py-3 md:py-4 rounded-lg">
+          <div class="text-lg md:text-xl"><i class="fas fa-stopwatch"></i> 極限逃生</div>
+          <div class="text-xs opacity-75 mt-1">60秒｜沙塵暴來襲</div>
+        </button>
+      </div>
+    </div>
+
+    <div class="w-full md:w-1/3 bg-stone-950/40 rounded-lg p-5 border border-stone-700 h-fit">
+      <div class="flex justify-between items-center mb-4 text-amber-500 border-b border-stone-700 pb-2">
+        <h2 class="font-bold"><i class="fas fa-trophy"></i> 倖存者名單</h2>
+      </div>
+      <div class="overflow-y-auto max-h-48 md:max-h-64">
+        <table class="w-full text-sm text-stone-300">
+          <tbody id="leaderboard-body">
+            </tbody>
+        </table>
+      </div>
+      <div id="no-record-msg" class="text-center text-stone-500 text-xs py-4 hidden">
+        目前尚無倖存者紀錄<br>成為第一個逃出迷宮的人吧！
+      </div>
+    </div>
+  </div>
+
+  <div id="game-screen" class="hidden sand-panel w-full max-w-5xl p-4 md:p-6 relative z-20">
+    
+    <div class="flex flex-wrap justify-between items-center mb-4 md:mb-6 bg-stone-900/60 p-3 rounded-lg border border-stone-700 gap-2">
+      <div class="flex items-center gap-4">
+        <div class="text-xl md:text-2xl font-bold text-amber-500 flex items-center gap-2">
+          <i class="fas fa-gem"></i> <span id="score-display">0</span>
+        </div>
+        <div class="text-lg md:text-xl font-bold text-orange-500 opacity-0 transition-opacity" id="combo-display">
+          <i class="fas fa-fire"></i> x<span id="combo-count">0</span>
+        </div>
+      </div>
+      
+      <div class="flex items-center gap-2 md:gap-3 ml-auto">
+        <div class="w-24 md:w-32 hidden sm:block">
+           <div class="progress-bar-bg"><div id="progress-fill" class="progress-bar-fill"></div></div>
+        </div>
+        <div class="text-xl font-mono font-bold text-white bg-stone-800 px-3 py-1 rounded border border-stone-600 w-16 text-center">
+          <span id="timer-display">90</span>
+        </div>
+        <button onclick="togglePause()" class="bg-stone-600 hover:bg-stone-500 text-white w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center">
+          <i class="fas fa-pause text-xs md:text-sm"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="flex flex-col md:flex-row gap-4 md:gap-6">
+      
+      <div class="flex-1 bg-stone-800/50 rounded-xl p-4 md:p-6 border border-stone-600 flex flex-col items-center text-center relative">
+        <div id="question-tag" class="absolute top-3 left-3 scene-chip">
+          <i class="fas fa-search"></i> 掃描中...
+        </div>
+
+        <div id="question-image" class="mb-4 mt-8 md:mt-6 w-full flex justify-center">
+          </div>
+
+        <h3 id="question-text" class="text-lg md:text-2xl font-bold text-stone-100 mb-2 mt-2">
+          題目載入中...
+        </h3>
+        <p id="question-detail" class="text-stone-400 text-sm md:text-base mb-4 font-mono leading-relaxed"></p>
+
+        <div class="mt-auto w-full bg-stone-900/40 p-2 md:p-3 rounded border border-stone-600/50 text-left md:text-center">
+          <span class="text-amber-500 text-xs md:text-sm font-bold block md:inline"><i class="fas fa-robot"></i> 迷宮提示：</span>
+          <span id="formula-hint" class="text-stone-400 text-xs md:text-sm"></span>
+        </div>
+      </div>
+
+      <div class="w-full md:w-1/3 flex flex-col gap-3 justify-center" id="options-container">
+        </div>
+    </div>
+
+    <div id="pause-overlay" class="hidden absolute inset-0 bg-stone-950/95 z-50 flex flex-col items-center justify-center rounded-lg backdrop-blur-sm">
+      <h2 class="text-3xl md:text-4xl text-white font-bold mb-8">系統暫停</h2>
+      <button onclick="togglePause()" class="bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg text-lg mb-4 shadow-lg w-64">
+        繼續修復
+      </button>
+      <button onclick="exitGame()" class="bg-red-700 hover:bg-red-600 text-white font-bold py-3 px-8 rounded-lg text-lg shadow-lg w-64">
+        放棄並退出
+      </button>
+    </div>
+
+  </div>
+
+  <div id="result-screen" class="hidden sand-panel w-full max-w-md p-8 text-center animate-fade-in relative z-20">
+    <div class="mb-6 relative inline-block">
+      <div class="absolute inset-0 bg-amber-500 blur-xl opacity-20 rounded-full"></div>
+      <i class="fas fa-check-circle text-6xl text-emerald-500 mb-4 relative"></i>
+    </div>
+    
+    <h2 class="text-2xl md:text-3xl font-bold text-white mb-2">試煉完成</h2>
+    <p class="text-stone-400 mb-8 text-sm">防護罩已重新啟動</p>
+
+    <div class="bg-stone-900/50 rounded-lg p-6 mb-8 border border-stone-700">
+      <div class="flex justify-between border-b border-stone-700 pb-3 mb-3">
+        <span class="text-stone-400 text-sm">倖存者</span>
+        <span class="font-bold text-lg text-amber-500" id="result-name">--</span>
+      </div>
+      <div class="flex justify-between border-b border-stone-700 pb-3 mb-3">
+        <span class="text-stone-400 text-sm">修復積分</span>
+        <span class="font-bold text-2xl text-white" id="result-score">0</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-stone-400 text-sm">最大連鎖</span>
+        <span class="font-bold text-xl text-orange-500" id="result-combo">0</span>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3">
+      <button onclick="resetGame()" class="btn-sand bg-blue-700 hover:bg-blue-600 text-white font-bold py-3 rounded-lg">
+        <i class="fas fa-redo"></i> 再次挑戰
+      </button>
+      <button onclick="showStartScreen()" class="btn-sand bg-stone-600 hover:bg-stone-500 text-white font-bold py-3 rounded-lg">
+        <i class="fas fa-list"></i> 查看榜單
+      </button>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+    <div class="footer-pill">
+        <div class="footer-left">
+            <div class="footer-dot" aria-hidden="true"></div>
+            <div class="footer-copy">© 2025–2026 Jessie Math 捷析老師. All rights reserved.</div>
+        </div>
+        <div class="footer-right">
+            <div class="footer-icon" aria-hidden="true"><i class="fas fa-compass"></i></div>
+            <div class="footer-tagline">數學不迷路，Jessie帶你走向理解。</div>
+        </div>
+    </div>
+</footer>
+
+<script>
+  // --- 題目資料庫 ---
+  const questionBank = [
+    {
+      id: 1,
+      tag: "梯形柱體積｜入口閘門",
+      text: "要開啟入口閘門，需計算梯形基座體積。",
+      detail: "底面梯形：上底4cm、下底10cm、高5cm；柱高8cm。求體積。",
+      options: [280, 560, 140, 240],
+      answer: 280,
+      hint: "(上底+下底)×高÷2 × 柱高",
+      shape: "trapezoid_prism"
+    },
+    {
+      id: 2,
+      tag: "空心方柱｜通風管道",
+      text: "管道被沙塵堵塞，請計算管道材料體積。",
+      detail: "外部邊長30cm正方體，中間挖掉直徑20cm圓孔，厚度6cm。體積約為？(π=3.14)",
+      options: [3516, 5400, 1884, 3014],
+      answer: 3516,
+      hint: "(30×30 - 10×10×3.14)×6",
+      shape: "square_prism_hole"
+    },
+    {
+      id: 3,
+      tag: "半圓柱｜儲水槽",
+      text: "沙漠中的半圓柱形儲水槽。",
+      detail: "半徑4cm，長12cm。請問體積是多少？(π=3.14)",
+      options: [301.44, 602.88, 150.72, 452.16],
+      answer: 301.44,
+      hint: "圓柱體積的一半：(4×4×3.14 × 12) ÷ 2",
+      shape: "half_cylinder"
+    },
+    {
+      id: 4,
+      tag: "圓柱展開圖｜石柱藍圖",
+      text: "找到一張古代石柱的藍圖。",
+      detail: "展開後側面長方形的長是37.68cm。請問柱子的直徑約是多少？",
+      options: [12, 6, 10, 24],
+      answer: 12,
+      hint: "圓周長 = 直徑 × 3.14",
+      shape: "cylinder_net"
+    },
+    {
+      id: 5,
+      tag: "複合圖形｜L型防禦牆",
+      text: "防禦牆是特殊的L型柱體。",
+      detail: "上方梯形柱體積280，下方長方體(15×4×5)體積300。總體積是？",
+      options: [580, 680, 480, 600],
+      answer: 580,
+      hint: "280 + 300",
+      shape: "l_prism"
+    },
+    {
+      id: 6,
+      tag: "圓柱表面積｜能量核心",
+      text: "能量核心是一根實心圓柱。",
+      detail: "直徑20cm(半徑10)，柱高30cm。表面積約是多少？(π=3.14)",
+      options: [2512, 1884, 628, 3140],
+      answer: 2512,
+      hint: "(20×3.14×30) + (10×10×3.14×2)",
+      shape: "cylinder_full"
+    },
+    {
+      id: 7,
+      tag: "三角柱體積｜避難所支架",
+      text: "支撐避難所的三角橫梁。",
+      detail: "底面三角形底12cm、高5cm；柱長25cm。求體積。",
+      options: [750, 1500, 600, 300],
+      answer: 750,
+      hint: "(12×5÷2) × 25",
+      shape: "triangular_prism"
+    },
+    {
+      id: 8,
+      tag: "空心圓柱｜地下隧道",
+      text: "一段地下空心水泥管。",
+      detail: "外直徑4m，內直徑3m(厚0.5m)，長20m。體積約是多少？",
+      options: [109.9, 219.8, 62.8, 47.1],
+      answer: 109.9,
+      hint: "(2² - 1.5²)×3.14×20",
+      shape: "cylinder_hollow"
+    }
+  ];
+
+  // --- 遊戲狀態 ---
+  let gameState = {
+    score: 0,
+    timer: 90,
+    totalTime: 90,
+    combo: 0,
+    maxCombo: 0,
+    interval: null,
+    playerName: "",
+    difficulty: "normal",
+    currentQIndex: 0,
+    shuffledQuestions: []
+  };
+
+  // 1. 榮譽榜初始化為空陣列
+  let leaderboard = []; 
+
+  // --- 初始化 ---
+  window.onload = function(){
+    loadLeaderboard();
+    renderLeaderboard();
+  };
+
+  function showStartScreen(){
+    document.getElementById('start-screen').classList.remove('hidden');
+    document.getElementById('game-screen').classList.add('hidden');
+    document.getElementById('result-screen').classList.add('hidden');
+    document.getElementById('pause-overlay').classList.add('hidden');
+    renderLeaderboard();
+  }
+
+  function selectDifficulty(diff){
+    const nameInput = document.getElementById('player-name').value.trim();
+    if(!nameInput){
+      alert("請輸入倖存者代號！");
+      return;
+    }
+    gameState.playerName = nameInput;
+    gameState.difficulty = diff;
+    gameState.totalTime = diff === 'hard' ? 60 : 90;
+    gameState.timer = gameState.totalTime;
+    startGame();
+  }
+
+  function startGame(){
+    gameState.score = 0;
+    gameState.combo = 0;
+    gameState.maxCombo = 0;
+    gameState.shuffledQuestions = [...questionBank].sort(() => Math.random() - 0.5);
+    gameState.currentQIndex = 0;
+
+    document.getElementById('start-screen').classList.add('hidden');
+    document.getElementById('result-screen').classList.add('hidden');
+    document.getElementById('game-screen').classList.remove('hidden');
+
+    updateHUD();
+    
+    if(gameState.interval) clearInterval(gameState.interval);
+    gameState.interval = setInterval(gameLoop, 1000);
+
+    loadQuestion();
+  }
+
+  function gameLoop(){
+    gameState.timer--;
+    updateHUD();
+    if(gameState.timer <= 0){
+      endGame();
+    }
+  }
+
+  function updateHUD(){
+    document.getElementById('score-display').innerText = gameState.score;
+    const timerEl = document.getElementById('timer-display');
+    timerEl.innerText = gameState.timer;
+    
+    // 進度條
+    const qProgress = Math.min(100, (gameState.score / 2000) * 100); 
+    document.getElementById('progress-fill').style.width = qProgress + "%";
+
+    if(gameState.timer < 10){
+      timerEl.parentElement.classList.add('bg-red-900','border-red-500','animate-pulse');
+    }else{
+      timerEl.parentElement.classList.remove('bg-red-900','border-red-500','animate-pulse');
+    }
+
+    const comboEl = document.getElementById('combo-display');
+    document.getElementById('combo-count').innerText = gameState.combo;
+    if(gameState.combo > 1){
+      comboEl.classList.remove('opacity-0');
+      comboEl.classList.add('combo-text');
+      setTimeout(() => comboEl.classList.remove('combo-text'), 300);
+    }else{
+      comboEl.classList.add('opacity-0');
+    }
+  }
+
+  // --- SVG 繪圖核心 (配色改為沙漠遺跡風格) ---
+  function renderShape(q){
+    const box = document.getElementById('question-image');
+    
+    const colors = {
+      stroke: "#a8a29e", // stone-400
+      fillMain: "rgba(217, 119, 6, 0.15)", // amber-600 tint
+      fillSide: "rgba(120, 113, 108, 0.25)", // stone-500 tint
+      lineDash: "rgba(168, 162, 158, 0.4)"
+    };
+
+    const svgStart = `<svg viewBox="0 0 200 140" class="w-full h-auto drop-shadow-md">`;
+    const svgEnd = `</svg>`;
+
+    const shapes = {
+      trapezoid_prism: () => `
+        <path d="M60,40 L140,40 L160,70 L40,70 Z" fill="${colors.fillSide}" stroke="${colors.stroke}" stroke-width="2"/>
+        <path d="M40,70 L40,120 L160,120 L160,70" fill="${colors.fillMain}" stroke="${colors.stroke}" stroke-width="2"/>
+        <path d="M60,40 L60,90 L40,120" fill="none" stroke="${colors.stroke}" stroke-width="2"/>
+        <path d="M140,40 L140,90 L160,120" fill="none" stroke="${colors.stroke}" stroke-width="2"/>
+        <line x1="160" y1="120" x2="60" y2="90" stroke="${colors.lineDash}" stroke-dasharray="4"/>
+        <line x1="60" y1="90" x2="140" y2="90" stroke="${colors.lineDash}" stroke-dasharray="4"/>
+      `,
+      square_prism_hole: () => `
+        <rect x="50" y="30" width="100" height="80" fill="${colors.fillMain}" stroke="${colors.stroke}" stroke-width="2"/>
+        <circle cx="100" cy="70" r="25" fill="#292524" stroke="${colors.stroke}" stroke-width="2"/>
+        <path d="M150,30 L170,40 L170,120 L150,110 Z" fill="${colors.fillSide}" stroke="${colors.stroke}" stroke-width="2"/>
+      `,
+      cylinder_full: () => `
+        <ellipse cx="100" cy="30" rx="40" ry="12" fill="${colors.fillSide}" stroke="${colors.stroke}" stroke-width="2"/>
+        <path d="M60,30 L60,110 A40,12 0 0,0 140,110 L140,30" fill="${colors.fillMain}" stroke="${colors.stroke}" stroke-width="2"/>
+        <ellipse cx="100" cy="110" rx="40" ry="12" fill="none" stroke="${colors.stroke}" stroke-width="2" stroke-dasharray="4 4"/>
+      `,
+      half_cylinder: () => `
+        <path d="M50,100 A50,20 0 0,1 150,100" fill="none" stroke="${colors.stroke}" stroke-width="2" stroke-dasharray="4"/>
+        <path d="M50,100 L150,100 L150,50 L50,50 Z" fill="${colors.fillMain}" stroke="${colors.stroke}" stroke-width="2"/>
+        <path d="M50,50 A50,20 0 0,1 150,50" fill="${colors.fillSide}" stroke="${colors.stroke}" stroke-width="2"/>
+        <line x1="50" y1="50" x2="50" y2="100" stroke="${colors.stroke}" stroke-width="2"/>
+        <line x1="150" y1="50" x2="150" y2="100" stroke="${colors.stroke}" stroke-width="2"/>
+      `,
+      l_prism: () => `
+        <path d="M40,40 L80,40 L80,80 L140,80 L140,120 L40,120 Z" fill="${colors.fillMain}" stroke="${colors.stroke}" stroke-width="2"/>
+        <path d="M40,40 L60,25 L100,25 L80,40" fill="${colors.fillSide}" stroke="${colors.stroke}" stroke-width="2"/>
+        <path d="M100,25 L100,65 L160,65 L140,80" fill="${colors.fillSide}" stroke="${colors.stroke}" stroke-width="2"/>
+        <path d="M160,65 L160,105 L140,120" fill="${colors.fillSide}" stroke="${colors.stroke}" stroke-width="2"/>
+      `,
+      cylinder_net: () => `
+        <rect x="30" y="50" width="140" height="60" fill="${colors.fillMain}" stroke="${colors.stroke}" stroke-width="2"/>
+        <circle cx="50" cy="30" r="15" fill="${colors.fillSide}" stroke="${colors.stroke}" stroke-width="2"/>
+        <circle cx="150" cy="30" r="15" fill="${colors.fillSide}" stroke="${colors.stroke}" stroke-width="2"/>
+      `,
+      triangular_prism: () => `
+        <polygon points="50,40 20,100 80,100" fill="${colors.fillSide}" stroke="${colors.stroke}" stroke-width="2"/>
+        <path d="M50,40 L150,20 L180,80 L80,100 Z" fill="${colors.fillMain}" stroke="${colors.stroke}" stroke-width="2"/>
+        <line x1="150" y1="20" x2="120" y2="80" stroke="${colors.stroke}" stroke-width="2" stroke-dasharray="4"/>
+        <line x1="180" y1="80" x2="120" y2="80" stroke="${colors.stroke}" stroke-width="2" stroke-dasharray="4"/>
+        <line x1="20" y1="100" x2="120" y2="80" stroke="${colors.stroke}" stroke-width="2" stroke-dasharray="4"/>
+      `,
+      cylinder_hollow: () => `
+        <ellipse cx="100" cy="30" rx="40" ry="12" fill="${colors.fillSide}" stroke="${colors.stroke}" stroke-width="2"/>
+        <ellipse cx="100" cy="30" rx="25" ry="8" fill="#292524" stroke="${colors.stroke}" stroke-width="2"/>
+        <path d="M60,30 L60,100 A40,12 0 0,0 140,100 L140,30" fill="${colors.fillMain}" stroke="${colors.stroke}" stroke-width="2"/>
+      `
+    };
+
+    const type = q.shape || "cylinder_full";
+    box.innerHTML = svgStart + (shapes[type] ? shapes[type]() : shapes.cylinder_full()) + svgEnd;
+  }
+
+  function loadQuestion(){
+    if(gameState.currentQIndex >= gameState.shuffledQuestions.length){
+      gameState.shuffledQuestions = [...questionBank].sort(() => Math.random() - 0.5);
+      gameState.currentQIndex = 0;
+    }
+
+    const q = gameState.shuffledQuestions[gameState.currentQIndex];
+
+    document.getElementById('question-tag').innerHTML = `<i class="fas fa-microchip"></i> ${q.tag}`;
+    document.getElementById('question-text').innerText = q.text;
+    document.getElementById('question-detail').innerText = q.detail;
+    document.getElementById('formula-hint').innerText = q.hint || "計算中...";
+
+    renderShape(q);
+
+    const optionsContainer = document.getElementById('options-container');
+    optionsContainer.innerHTML = '';
+
+    let currentOptions = [...q.options];
+    currentOptions.sort(() => Math.random() - 0.5);
+
+    currentOptions.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = "btn-sand w-full bg-stone-700 hover:bg-stone-600 text-amber-50 font-bold py-3 md:py-4 rounded-lg text-lg md:text-xl border border-stone-600 relative overflow-hidden group";
+      
+      const span = document.createElement('span');
+      span.className = "relative z-10";
+      span.innerText = opt;
+      btn.appendChild(span);
+
+      btn.onclick = () => checkAnswer(btn, opt, q.answer);
+      optionsContainer.appendChild(btn);
+    });
+  }
+
+  function checkAnswer(btnElement, selected, correct){
+    const allBtns = document.getElementById('options-container').querySelectorAll('button');
+    allBtns.forEach(b => b.disabled = true);
+
+    if(selected == correct){
+      btnElement.classList.add('correct-anim');
+      
+      const baseScore = 100;
+      const comboBonus = gameState.combo * 20;
+      gameState.score += (baseScore + comboBonus);
+      
+      gameState.timer += 5; // 獎勵時間
+
+      gameState.combo++;
+      if(gameState.combo > gameState.maxCombo) gameState.maxCombo = gameState.combo;
+
+    }else{
+      btnElement.classList.add('wrong-anim');
+      
+      allBtns.forEach(b => {
+        if(b.innerText == correct) b.classList.add('bg-emerald-900', 'border-emerald-500');
+      });
+
+      gameState.timer -= 5; // 懲罰
+      gameState.combo = 0;
+    }
+
+    updateHUD();
+
+    setTimeout(() => {
+      gameState.currentQIndex++;
+      if(gameState.timer > 0){
+        loadQuestion();
+      }
+    }, 1200);
+  }
+
+  function togglePause(){
+    const overlay = document.getElementById('pause-overlay');
+    if(gameState.interval){
+      clearInterval(gameState.interval);
+      gameState.interval = null;
+      overlay.classList.remove('hidden');
+    }else{
+      gameState.interval = setInterval(gameLoop, 1000);
+      overlay.classList.add('hidden');
+    }
+  }
+
+  function exitGame(){
+    clearInterval(gameState.interval);
+    showStartScreen();
+  }
+
+  function endGame(){
+    clearInterval(gameState.interval);
+    gameState.interval = null;
+
+    document.getElementById('game-screen').classList.add('hidden');
+    document.getElementById('result-screen').classList.remove('hidden');
+
+    document.getElementById('result-name').innerText = gameState.playerName;
+    document.getElementById('result-score').innerText = gameState.score;
+    document.getElementById('result-combo').innerText = gameState.maxCombo;
+
+    saveScore(gameState.playerName, gameState.score);
+  }
+
+  function resetGame(){
+    startGame();
+  }
+
+  // --- 數據存取 (使用 LocalStorage) ---
+  function saveScore(name, score){
+    leaderboard.push({ name: name, score: score });
+    leaderboard.sort((a,b) => b.score - a.score);
+    if(leaderboard.length > 5) leaderboard.pop();
+    
+    // 儲存到瀏覽器
+    localStorage.setItem('scorchMazeScores', JSON.stringify(leaderboard));
+    
+    renderLeaderboard();
+  }
+
+  function loadLeaderboard(){
+    const saved = localStorage.getItem('scorchMazeScores');
+    if(saved){
+      leaderboard = JSON.parse(saved);
+    } else {
+      leaderboard = []; // 初始為空
+    }
+  }
+
+  function renderLeaderboard(){
+    const tbody = document.getElementById('leaderboard-body');
+    const msg = document.getElementById('no-record-msg');
+    
+    tbody.innerHTML = '';
+    
+    // 2. 判斷是否有紀錄
+    if(leaderboard.length === 0){
+      msg.classList.remove('hidden');
+      return;
+    } else {
+      msg.classList.add('hidden');
+    }
+
+    leaderboard.forEach((entry, index) => {
+      let icon = index === 0 ? '<i class="fas fa-crown text-yellow-400"></i>' : `#${index+1}`;
+      let rowClass = index === 0 ? 'text-amber-400 font-bold bg-amber-950/30' : '';
+      
+      const tr = document.createElement('tr');
+      tr.className = `border-b border-stone-800 ${rowClass}`;
+      tr.innerHTML = `
+        <td class="py-3 px-2 text-center w-12">${icon}</td>
+        <td class="py-3 font-mono">${entry.name}</td>
+        <td class="py-3 text-right pr-2 text-stone-400">${entry.score}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+</script>
+
+</body>
+</html>

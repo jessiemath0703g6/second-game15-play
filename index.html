@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Jessie Math 捷析 - 遺蹟修復師</title>
+
+  <meta name="description" content="© 2025–2026 Jessie Math 捷析老師. All rights reserved.">
+  
+  <meta property="og:title" content="Jessie Math 捷析 - 遺蹟修復師 ">
+  <meta property="og:description" content="© 2025–2026 Jessie Math 捷析老師. All rights reserved.">
+  <meta property="og:type" content="website">
+
+  <meta property="og:image" content="g6-u15-2.png">
+  <meta property="og:image:width" content="1024">
+  <meta property="og:image:height" content="1536">
+  <meta property="og:image:alt" content="Jessie Math 遊戲封面">
+
+  <link rel="image_src" href="g6-u15-2.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Jessie Math 捷析 - 遺蹟修復師 ">
+  <meta name="twitter:description" content="© 2025–2026 Jessie Math 捷析老師. All rights reserved.">
+  <meta name="twitter:image" content="g6-u15-2.png">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sand: {
+              100: '#fdf6e3',
+              200: '#eee8d5',
+              800: '#5c5240',
+              900: '#2b261e',
+            },
+            rust: {
+              500: '#d97706',
+              600: '#b45309',
+            }
+          },
+          animation: {
+            'float-up': 'floatUp 1s ease-out forwards',
+            'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
+            'badge-pulse': 'badgePulse 2s infinite',
+          },
+          keyframes: {
+            floatUp: {
+              '0%': { opacity: '1', transform: 'translate(-50%, -50%) scale(1)' },
+              '100%': { opacity: '0', transform: 'translate(-50%, -150%) scale(1.5)' },
+            },
+            shake: {
+              '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' },
+              '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
+              '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
+              '40%, 60%': { transform: 'translate3d(4px, 0, 0)' }
+            },
+            badgePulse: {
+              '0%': { boxShadow: '0 0 0 0 rgba(251, 191, 36, 0.7)' },
+              '70%': { boxShadow: '0 0 0 20px rgba(251, 191, 36, 0)' },
+              '100%': { boxShadow: '0 0 0 0 rgba(251, 191, 36, 0)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* 全局字體與防止反藍設定 */
+    body {
+      font-family: 'Fredoka', sans-serif;
+      /* 全版背景圖設定 */
+      background-image: url('jessie-logo-play.jpg');
+      background-color: #d6d3d1; 
+      background-size: cover;
+      background-position: top right; 
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      color: #292524; 
+      
+      /* 解決字體反藍與拖曳問題 */
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+    
+    /* 輸入框需要可以選取文字 */
+    input, textarea {
+      -webkit-user-select: auto;
+      user-select: auto;
+    }
+
+    /* 手機直向警告遮罩 */
+    #landscape-warning {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background-color: #1c1917;
+      z-index: 99999;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    @media screen and (max-width: 767px) and (orientation: portrait) {
+      #landscape-warning { display: flex !important; }
+      #main-wrapper { display: none !important; }
+    }
+
+    /* =========================================
+       HERO / HEADER (品牌識別)
+       ========================================= */
+    .brand-header {
+      background-color: rgba(255, 255, 255, 0.95);
+      border-bottom: 1px solid #e7e5e4;
+      padding: 0.5rem 1rem;
+      box-shadow: 0 4px 10px -2px rgba(120, 113, 108, 0.2);
+    }
+    @media (min-width: 768px) {
+      .brand-header { padding: 0.75rem 1.5rem; }
+    }
+
+    .logo-circle {
+      width: 45px; height: 45px;
+      border-radius: 50%;
+      background-color: transparent; 
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; margin-right: 10px;
+      flex-shrink: 0;
+    }
+    @media (min-width: 768px) {
+      .logo-circle { width: 55px; height: 55px; margin-right: 12px; }
+    }
+    .logo-img { width: 90%; height: auto; object-fit: contain; }
+
+    .brand-title {
+      font-size: 1.5rem; font-weight: 800; color: #1c1917; letter-spacing: 0.5px;
+    }
+    @media (min-width: 768px) { .brand-title { font-size: 2rem; } }
+
+    /* 導覽按鈕 */
+    .nav-pill {
+      display: flex; align-items: center; gap: 0.4rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 9999px;
+      font-weight: 700; font-size: 0.85rem;
+      transition: all 0.2s ease; text-decoration: none; white-space: nowrap;
+    }
+    @media (min-width: 768px) {
+      .nav-pill { padding: 0.5rem 1.25rem; font-size: 1rem; gap: 0.5rem; }
+    }
+    .nav-pill-default {
+      background-color: #fafaf9; border: 1px solid #d6d3d1; color: #57534e;
+    }
+    .nav-pill-default:hover {
+      background-color: #f5f5f4; color: #1c1917; border-color: #a8a29e;
+    }
+    .nav-pill-active {
+      background-color: #f3e8ff; border: 1px solid #7c3aed; color: #6d28d9;
+    }
+    .nav-pill-active:hover { background-color: #e9d5ff; }
+
+    /* =========================================
+       遊戲本體 (沙漠/焦土風格)
+       ========================================= */
+    .sand-panel {
+      background: rgba(41, 37, 36, 0.85); 
+      backdrop-filter: blur(8px);
+      border-radius: 1rem;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+      border: 2px solid rgba(214, 211, 209, 0.2); 
+      color: #f5f5f4;
+    }
+    
+    .btn-sand {
+      transition: all 0.2s;
+      box-shadow: 0 4px 0 rgba(0,0,0,0.3); 
+      border: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      top: 0;
+    }
+    .btn-sand:active { 
+      transform: translateY(4px); 
+      box-shadow: 0 0 0 rgba(0,0,0,0.3); 
+    }
+    .btn-sand:disabled {
+      opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none;
+    }
+
+    .combo-text { animation: pop .3s cubic-bezier(.175,.885,.32,1.275); }
+    @keyframes pop { 0% {transform: scale(1)} 50% {transform: scale(1.5)} 100% {transform: scale(1)} }
+
+    .correct-anim { background-color: #166534 !important; color: #dcfce7 !important; border-color: #22c55e !important; }
+    .wrong-anim { background-color: #991b1b !important; color: #fee2e2 !important; border-color: #ef4444 !important; }
+
+    .scene-chip {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .25rem .6rem;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fdba74;
+      font-weight: 700; font-size: 0.75rem;
+      letter-spacing: .05em;
+    }
+
+    .progress-bar-bg { width: 100%; height: 8px; background: #1c1917; border-radius: 4px; overflow: hidden; border: 1px solid #44403c; }
+    .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #d97706, #fbbf24); width: 0%; transition: width 0.5s ease; }
+    
+    h1 { font-size: 1.75rem; line-height: 1.2; }
+    @media (min-width: 768px) { h1 { font-size: 2.5rem; } }
+
+    /* =========================================
+       FOOTER STYLES
+       ========================================= */
+    footer {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 1.5rem 1rem;
+        margin-top: auto;
+        position: relative;
+        z-index: 40;
+    }
+    .footer-pill {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(28, 25, 23, 0.95);
+        border: 1px solid #57534e;
+        padding: 0.75rem 1.5rem;
+        border-radius: 1.5rem;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        backdrop-filter: blur(4px);
+        font-size: 0.75rem;
+        color: #d6d3d1;
+        text-align: center;
+        max-width: 95%;
+    }
+    @media (min-width: 768px) {
+        .footer-pill {
+            flex-direction: row;
+            gap: 2rem;
+            border-radius: 9999px;
+            padding: 0.5rem 1.5rem;
+            text-align: left;
+        }
+    }
+    .footer-left, .footer-right {
+        display: flex; align-items: center; gap: 0.5rem; justify-content: center;
+    }
+    .footer-dot {
+        width: 6px; height: 6px; background-color: #f59e0b; border-radius: 50%;
+        box-shadow: 0 0 8px rgba(245, 158, 11, 0.6); flex-shrink: 0;
+    }
+    .footer-icon { color: #f59e0b; font-size: 0.85rem; }
+    .footer-copy, .footer-tagline { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    @media (max-width: 767px) {
+        .footer-copy, .footer-tagline { white-space: normal; }
+    }
+
+    /* 排行榜表格捲動適應 */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+    }
+    table th, table td { white-space: nowrap; }
+  </style>
+</head>
+
+<body>
+
+<div id="landscape-warning">
+  <i class="fas fa-mobile-alt text-6xl rotate-90 mb-6 text-amber-500 animate-pulse"></i>
+  <h2 class="text-2xl font-bold mb-2 text-white">請旋轉您的設備</h2>
+  <p class="text-stone-400 text-center max-w-xs">為了獲得最佳遊玩體驗，手機版僅支援橫向模式。</p>
+</div>
+
+<div id="main-wrapper" class="min-h-screen flex flex-col w-full relative">
+
+  <canvas id="whiteboard" class="fixed inset-0 w-full h-full z-[55] hidden cursor-crosshair" style="touch-action: none; background: transparent;"></canvas>
+
+  <header class="brand-header w-full flex justify-between items-center sticky top-0 z-50">
+    <div class="flex items-center select-none">
+      <div class="logo-circle">
+        <img src="JESSIEMATH-Q.png" alt="Logo" class="logo-img"
+             onerror="this.style.display='none'; this.parentNode.style.backgroundColor='transparent'; this.parentNode.innerHTML='<span style=\'font-weight:bold; color:#78350f\'>JM</span>'">
+      </div>
+      <span class="brand-title hidden min-[350px]:inline">Jessie Math 捷析</span>
+    </div>
+
+    <div class="flex gap-2 items-center justify-end z-[60]">
+      <a href="https://jessiemath0703-chu.github.io/website2/" class="nav-pill nav-pill-default">
+        <i class="fas fa-home"></i> <span class="hidden sm:inline">首頁</span>
+      </a>
+      <a href="https://jessiemath0703-chu.github.io/Game-Lobby/" class="nav-pill nav-pill-default">
+        <i class="fas fa-gamepad"></i> <span class="hidden sm:inline">遊戲大廳</span>
+      </a>
+      <a href="https://jessiemath0703-chu.github.io/Game-Lobby/#g6-u15" class="nav-pill nav-pill-active">
+        <i class="fas fa-reply"></i> <span class="hidden sm:inline">G6角柱與圓柱</span><span class="sm:hidden">回單元</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="flex-grow flex justify-center items-center p-4 relative overflow-y-auto z-10">
+    
+    <div class="absolute top-20 left-10 text-stone-600 opacity-20 text-8xl md:text-9xl rotate-12 pointer-events-none"><i class="fas fa-dungeon"></i></div>
+    <div class="absolute bottom-10 right-5 text-stone-600 opacity-20 text-8xl md:text-9xl -rotate-12 pointer-events-none"><i class="fas fa-cube"></i></div>
+
+    <div id="start-screen" class="sand-panel w-full max-w-5xl p-6 md:p-8 flex flex-col lg:flex-row gap-8 animate-fade-in relative z-20">
+      <div class="flex-1 space-y-4 md:space-y-6 flex flex-col justify-center items-center lg:items-start text-center lg:text-left">
+        <h1 class="font-bold text-amber-500 border-b-2 border-stone-600 pb-3 inline-block">
+          <i class="fas fa-wind"></i> 焦土迷宮：幾何試煉
+        </h1>
+
+        <p class="text-stone-300 text-sm md:text-lg leading-relaxed">
+          這裡是一片荒蕪的幾何沙漠。古老的防護罩因為計算錯誤而崩塌，沙塵暴即將來襲。
+          <br>你需要修復這些<b>柱體裝置</b>，計算正確的<span class="text-orange-400">體積</span>與<span class="text-emerald-400">表面積</span>。
+        </p>
+
+        <div class="bg-stone-900/50 p-4 rounded-lg border-l-4 border-amber-600 w-full max-w-sm">
+          <label class="block text-stone-400 font-bold mb-2 text-sm text-left">輸入倖存者代號:</label>
+          <input type="text" id="player-name"
+                 class="w-full p-3 rounded bg-stone-800 border border-stone-600 text-white focus:outline-none focus:border-amber-500 transition"
+                 placeholder="例如: Runner01">
+        </div>
+
+        <button onclick="startGameAction()" class="btn-sand bg-rust-600 hover:bg-rust-500 text-white font-bold py-3 md:py-4 rounded-lg z-[60] w-full max-w-sm mt-2 shadow-lg hover:scale-105 transition-transform">
+          <div class="text-lg md:text-xl"><i class="fas fa-play-circle"></i> 開始試煉</div>
+          <div class="text-xs text-amber-200 mt-1 tracking-wide">90秒｜目標：答對7題（含）以上</div>
+        </button>
+      </div>
+
+      <div class="w-full lg:w-1/2 bg-stone-950/40 rounded-lg p-5 border border-stone-700 h-fit">
+        <div class="flex justify-between items-center mb-4 text-amber-500 border-b border-stone-700 pb-2">
+          <h2 class="font-bold"><i class="fas fa-trophy"></i> 倖存者英雄榜 (Top 10)</h2>
+        </div>
+        <div class="table-container max-h-48 md:max-h-64 overflow-y-auto">
+          <table class="w-full text-sm text-stone-300 text-left">
+            <thead class="text-xs text-stone-500 bg-stone-900/50 sticky top-0">
+              <tr>
+                <th class="py-2 px-2 text-center w-12">名次</th>
+                <th class="py-2 px-2">玩家</th>
+                <th class="py-2 px-2 text-center">題數</th>
+                <th class="py-2 px-2 text-right">分數</th>
+                <th class="py-2 px-2 text-center">狀態</th>
+                <th class="py-2 px-2 text-right">日期/時間</th>
+              </tr>
+            </thead>
+            <tbody id="leaderboard-body" class="divide-y divide-stone-800">
+            </tbody>
+          </table>
+        </div>
+        <div id="no-record-msg" class="text-center text-stone-500 text-xs py-4 hidden">
+          目前尚無紀錄<br>成為第一個逃出迷宮的人吧！
+        </div>
+      </div>
+    </div>
+
+    <div id="game-screen" class="hidden sand-panel w-full max-w-5xl p-4 md:p-6 relative z-20">
+      
+      <div class="flex flex-wrap justify-between items-center mb-4 md:mb-6 bg-stone-900/60 p-3 rounded-lg border border-stone-700 gap-2">
+        <div class="flex items-center gap-4">
+          <div class="text-xl md:text-2xl font-bold text-amber-500 flex items-center gap-2">
+            <i class="fas fa-gem"></i> <span id="score-display">0</span>
+          </div>
+          <div class="text-lg md:text-xl font-bold text-orange-500 opacity-0 transition-opacity" id="combo-display">
+            <i class="fas fa-fire"></i> x<span id="combo-count">0</span>
+          </div>
+          <div class="text-sm font-bold text-emerald-400 bg-emerald-900/40 px-3 py-1 rounded border border-emerald-700/50 hidden sm:block">
+            已修復: <span id="correct-display">0</span>
+          </div>
+        </div>
+        
+        <div class="flex items-center gap-2 md:gap-3 ml-auto z-[60]">
+          <div class="w-24 md:w-32 hidden sm:block">
+             <div class="progress-bar-bg"><div id="progress-fill" class="progress-bar-fill"></div></div>
+          </div>
+          <div class="text-xl font-mono font-bold text-white bg-stone-800 px-3 py-1 rounded border border-stone-600 w-16 text-center">
+            <span id="timer-display">90</span>
+          </div>
+          <button onclick="togglePause()" class="bg-stone-600 hover:bg-stone-500 text-white w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center relative z-[60]">
+            <i class="fas fa-pause text-xs md:text-sm"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="flex flex-col md:flex-row gap-4 md:gap-6">
+        
+        <div id="question-panel" class="flex-1 bg-stone-800/50 rounded-xl p-4 md:p-6 border border-stone-600 flex flex-col items-center text-center relative transition-transform">
+          <div id="question-tag" class="absolute top-3 left-3 scene-chip">
+            <i class="fas fa-search"></i> 掃描中...
+          </div>
+
+          <div id="effect-container" class="absolute inset-0 pointer-events-none z-50 overflow-hidden"></div>
+
+          <div id="question-image" class="mb-4 mt-8 md:mt-6 w-full flex justify-center">
+          </div>
+
+          <h3 id="question-text" class="text-lg md:text-2xl font-bold text-stone-100 mb-2 mt-2">
+            題目載入中...
+          </h3>
+          <p id="question-detail" class="text-stone-400 text-sm md:text-base mb-4 font-mono leading-relaxed"></p>
+        </div>
+
+        <div class="w-full md:w-1/3 flex flex-col gap-3 justify-center z-[40]" id="options-container">
+        </div>
+      </div>
+
+      <div id="pause-overlay" class="hidden absolute inset-0 bg-stone-950/95 z-50 flex flex-col items-center justify-center rounded-lg backdrop-blur-sm">
+        <h2 class="text-3xl md:text-4xl text-white font-bold mb-8">系統暫停</h2>
+        <button onclick="togglePause()" class="bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg text-lg mb-4 shadow-lg w-64">
+          繼續修復
+        </button>
+        <button onclick="exitGame()" class="bg-red-700 hover:bg-red-600 text-white font-bold py-3 px-8 rounded-lg text-lg shadow-lg w-64">
+          放棄並退出
+        </button>
+      </div>
+    </div>
+
+    <div id="result-screen" class="hidden sand-panel w-full max-w-md p-8 text-center animate-fade-in relative z-20">
+      
+      <div id="result-badge" class="mb-6 relative mx-auto w-32 h-32 hidden">
+        <div class="absolute inset-0 bg-amber-500 blur-xl opacity-40 rounded-full animate-pulse"></div>
+        <img src="G6-U15.jpg" alt="專屬徽章" class="w-full h-full object-cover rounded-full border-4 border-amber-400 relative z-10 animate-badge-pulse shadow-[0_0_20px_rgba(251,191,36,0.8)]" onerror="this.style.display='none';">
+      </div>
+      
+      <div id="result-icon-container" class="mb-2 relative inline-block">
+        <i id="result-icon" class="fas fa-check-circle text-6xl text-emerald-500 mb-2 relative"></i>
+      </div>
+      
+      <h2 id="result-title" class="text-3xl md:text-4xl font-bold text-white mb-2 tracking-wide">試煉完成</h2>
+      <p id="result-desc" class="text-stone-400 mb-6 text-sm">防護罩狀態結算中...</p>
+
+      <div class="bg-stone-900/70 rounded-lg p-5 mb-6 border border-stone-700 shadow-inner">
+        <div class="flex justify-between border-b border-stone-700 pb-2 mb-2">
+          <span class="text-stone-400 text-sm">倖存者</span>
+          <span class="font-bold text-lg text-amber-500" id="result-name">--</span>
+        </div>
+        <div class="flex justify-between border-b border-stone-700 pb-2 mb-2">
+          <span class="text-stone-400 text-sm">答對題數</span>
+          <span class="font-bold text-xl text-emerald-400" id="result-correct-count">0</span>
+        </div>
+        <div class="flex justify-between border-b border-stone-700 pb-2 mb-2">
+          <span class="text-stone-400 text-sm">修復積分</span>
+          <span class="font-bold text-2xl text-white" id="result-score">0</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-stone-400 text-sm">最大連鎖</span>
+          <span class="font-bold text-lg text-orange-500" id="result-combo">0</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 z-[60] relative">
+        <button id="btn-replay" onclick="resetGame()" class="btn-sand bg-blue-700 hover:bg-blue-600 text-white font-bold py-3 rounded-lg text-sm md:text-base">
+          <i class="fas fa-redo"></i> 再次挑戰
+        </button>
+        <button onclick="showStartScreen()" class="btn-sand bg-stone-600 hover:bg-stone-500 text-white font-bold py-3 rounded-lg text-sm md:text-base">
+          <i class="fas fa-list"></i> 查看榜單
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+      <div class="footer-pill">
+          <div class="footer-left">
+              <div class="footer-dot" aria-hidden="true"></div>
+              <div class="footer-copy">© 2025–2026 Jessie Math 捷析老師. All rights reserved.</div>
+          </div>
+          <div class="footer-right">
+              <div class="footer-icon" aria-hidden="true"><i class="fas fa-compass"></i></div>
+              <div class="footer-tagline">數學不迷路，捷析Jessie帶你走向理解。</div>
+          </div>
+      </div>
+  </footer>
+
+  <div class="fixed bottom-6 right-6 z-[60] flex flex-col gap-4">
+    <button id="btn-sound" onclick="toggleSoundBtn()" class="bg-stone-800 text-amber-500 p-3 rounded-full shadow-lg border border-stone-600 w-14 h-14 flex items-center justify-center text-xl transition-all hover:scale-110">
+        <i class="fas fa-volume-up"></i>
+    </button>
+    <button id="btn-clear-wb" onclick="clearWhiteboard()" class="hidden bg-red-800 text-white p-3 rounded-full shadow-lg border border-red-600 w-14 h-14 flex items-center justify-center text-xl transition-all hover:scale-110">
+        <i class="fas fa-eraser"></i>
+    </button>
+    <button id="btn-whiteboard" onclick="toggleWhiteboard()" class="bg-blue-800 text-white p-3 rounded-full shadow-lg border border-blue-600 w-14 h-14 flex items-center justify-center text-xl transition-all hover:scale-110">
+        <i class="fas fa-pen"></i>
+    </button>
+  </div>
+
+</div>
+
+<script>
+  // --- 音效系統 (HTML5 Audio) ---
+  const audios = {
+    correct: new Audio('1.mp3'),
+    bgm: new Audio('2.mp3'),
+    wrong: new Audio('3.mp3'),
+    win: new Audio('4.mp3'),
+    lose: new Audio('5.mp3')
+  };
+  audios.bgm.loop = true;
+  // 調整一下音量平衡
+  audios.bgm.volume = 0.4; 
+  audios.correct.volume = 0.8;
+  audios.wrong.volume = 0.8;
+
+  let soundEnabled = true;
+
+  function playSound(type) {
+    if (!soundEnabled) return;
+    if (type !== 'bgm') {
+      audios[type].currentTime = 0; // 重置音效以便連續播放
+    }
+    audios[type].play().catch(e => console.log("Audio play blocked:", e));
+  }
+
+  function pauseBGM() {
+    audios.bgm.pause();
+  }
+
+  function toggleSoundBtn() {
+    soundEnabled = !soundEnabled;
+    const icon = document.querySelector('#btn-sound i');
+    if(soundEnabled) {
+      icon.className = 'fas fa-volume-up';
+      document.getElementById('btn-sound').classList.replace('bg-stone-600', 'bg-stone-800');
+      document.getElementById('btn-sound').classList.replace('text-stone-300', 'text-amber-500');
+      // 如果在遊戲中，恢復播放 BGM
+      if (!document.getElementById('game-screen').classList.contains('hidden') && !gameState.interval === null) {
+         playSound('bgm');
+      }
+    } else {
+      icon.className = 'fas fa-volume-mute';
+      document.getElementById('btn-sound').classList.replace('bg-stone-800', 'bg-stone-600');
+      document.getElementById('btn-sound').classList.replace('text-amber-500', 'text-stone-300');
+      // 停止所有聲音
+      for(let key in audios) {
+        audios[key].pause();
+      }
+    }
+  }
+
+  // --- 白板系統 ---
+  let wbActive = false;
+  let wbInitialized = false;
+  let ctx, drawing = false;
+
+  function toggleWhiteboard() {
+    wbActive = !wbActive;
+    const cvs = document.getElementById('whiteboard');
+    const btn = document.getElementById('btn-whiteboard');
+    const clearBtn = document.getElementById('btn-clear-wb');
+    if(wbActive) {
+        cvs.classList.remove('hidden');
+        btn.classList.replace('bg-blue-800', 'bg-blue-500');
+        clearBtn.classList.remove('hidden');
+        initWhiteboard();
+    } else {
+        cvs.classList.add('hidden');
+        btn.classList.replace('bg-blue-500', 'bg-blue-800');
+        clearBtn.classList.add('hidden');
+    }
+  }
+
+  function initWhiteboard() {
+    if(wbInitialized) return;
+    const canvas = document.getElementById('whiteboard');
+    ctx = canvas.getContext('2d');
+    
+    const resizeCanvas = () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.lineWidth = 4;
+        ctx.strokeStyle = '#0ea5e9'; 
+    };
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    const startPos = (e) => {
+        drawing = true;
+        draw(e);
+    };
+    const endPos = () => {
+        drawing = false;
+        ctx.beginPath();
+    };
+    const draw = (e) => {
+        if(!drawing) return;
+        e.preventDefault(); 
+        let x = e.clientX || (e.touches && e.touches[0].clientX);
+        let y = e.clientY || (e.touches && e.touches[0].clientY);
+        ctx.lineTo(x, y);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+    };
+    canvas.addEventListener('mousedown', startPos);
+    canvas.addEventListener('mouseup', endPos);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('touchstart', startPos, {passive: false});
+    canvas.addEventListener('touchend', endPos);
+    canvas.addEventListener('touchmove', draw, {passive: false});
+    wbInitialized = true;
+  }
+
+  function clearWhiteboard() {
+    if(ctx) {
+        const canvas = document.getElementById('whiteboard');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  }
+
+  // --- 動態題庫生成器 ---
+  function getRandomInt(min, max) { 
+    return Math.floor(Math.random() * (max - min + 1)) + min; 
+  }
+
+  function generateDynamicQuestion(id) {
+    const types = ['trapezoid', 'square_hole', 'half_cylinder', 'cylinder_net', 'cylinder_surface', 'triangular', 'cylinder_hollow'];
+    const type = types[getRandomInt(0, types.length - 1)];
+    let q = { id: id, tag: "", text: "", detail: "", options: [], answer: 0, shape: "" };
+    const PI = 3.14;
+
+    if (type === 'trapezoid') {
+        let top = getRandomInt(3, 8);
+        let bottom = top + getRandomInt(2, 6);
+        let h = getRandomInt(4, 10);
+        let L = getRandomInt(5, 15);
+        let area = (top + bottom) * h / 2;
+        let v = area * L;
+        q.tag = "梯形柱體積｜入口閘門";
+        q.text = "要開啟入口閘門，需計算梯形基座體積。";
+        q.detail = `底面梯形：上底${top}、下底${bottom}、高${h}；柱高${L}。求體積。`;
+        q.answer = parseFloat(v.toFixed(2));
+        q.shape = "trapezoid_prism";
+    } else if (type === 'half_cylinder') {
+        let r = getRandomInt(3, 10);
+        let L = getRandomInt(10, 20);
+        let v = (r * r * PI * L) / 2;
+        q.tag = "半圓柱｜儲水槽";
+        q.text = "沙漠中的半圓柱形儲水槽。";
+        q.detail = `半徑${r}，長${L}。請問體積是多少？(π=3.14)`;
+        q.answer = parseFloat(v.toFixed(2));
+        q.shape = "half_cylinder";
+    } else if (type === 'cylinder_surface') {
+        let d = getRandomInt(10, 30);
+        if(d%2 !== 0) d++; 
+        let r = d/2;
+        let h = getRandomInt(15, 40);
+        let sa = (2 * PI * r * r) + (d * PI * h);
+        q.tag = "圓柱表面積｜能量核心";
+        q.text = "能量核心是一根實心圓柱。";
+        q.detail = `直徑${d}(半徑${r})，柱高${h}。表面積約是多少？(π=3.14)`;
+        q.answer = parseFloat(sa.toFixed(2));
+        q.shape = "cylinder_full";
+    } else if (type === 'triangular') {
+        let b = getRandomInt(5, 15);
+        let h = getRandomInt(4, 12);
+        let L = getRandomInt(15, 30);
+        let v = (b * h / 2) * L;
+        q.tag = "三角柱體積｜避難所支架";
+        q.text = "支撐避難所的三角橫梁。";
+        q.detail = `底面三角形底${b}、高${h}；柱長${L}。求體積。`;
+        q.answer = parseFloat(v.toFixed(2));
+        q.shape = "triangular_prism";
+    } else if (type === 'cylinder_hollow') {
+        let outD = getRandomInt(6, 12); 
+        if(outD%2 !== 0) outD++; 
+        let inD = outD - getRandomInt(2, 4); 
+        if(inD%2 !== 0) inD--; 
+        if(inD <= 0) inD = 2;
+        let R = outD / 2;
+        let r = inD / 2;
+        let L = getRandomInt(10, 30);
+        let v = (R*R - r*r) * PI * L;
+        q.tag = "空心圓柱｜地下隧道";
+        q.text = "一段地下空心水泥管。";
+        q.detail = `外直徑${outD}，內直徑${inD}(厚${R-r})，長${L}。體積約是多少？(π=3.14)`;
+        q.answer = parseFloat(v.toFixed(2));
+        q.shape = "cylinder_hollow";
+    } else if (type === 'square_hole') {
+        let w = getRandomInt(20, 40);
+        let d = getRandomInt(10, w-5);
+        if(d%2!==0) d++;
+        let r = d/2;
+        let L = getRandomInt(5, 15);
+        let v = (w*w - r*r*PI) * L;
+        q.tag = "空心方柱｜通風管道";
+        q.text = "管道被沙塵堵塞，請計算管道材料體積。";
+        q.detail = `外部邊長${w}正方體，挖掉直徑${d}圓孔，厚度${L}。約為多少？(π=3.14)`;
+        q.answer = parseFloat(v.toFixed(2));
+        q.shape = "square_prism_hole";
+    } else {
+        let d = getRandomInt(5, 20);
+        let c = d * PI;
+        q.tag = "圓柱展開圖｜石柱藍圖";
+        q.text = "找到一張古代石柱的藍圖。";
+        q.detail = `展開後側面長方形的長是${parseFloat(c.toFixed(2))}。請問柱子的直徑約是多少？(π=3.14)`;
+        q.answer = d;
+        q.shape = "cylinder_net";
+    }
+
+    let opts = new Set([q.answer]);
+    while(opts.size < 4) {
+        let offsetType = getRandomInt(1, 4);
+        let fakeAns;
+        if(offsetType === 1) fakeAns = q.answer * 2; 
+        else if(offsetType === 2) fakeAns = q.answer / 2; 
+        else if(offsetType === 3) fakeAns = q.answer * 1.5; 
+        else fakeAns = q.answer + getRandomInt(-20, 20) * (q.answer > 100 ? 10 : 1);
+
+        if(fakeAns > 0 && fakeAns !== q.answer) {
+            opts.add(parseFloat(fakeAns.toFixed(2)));
+        }
+    }
+    q.options = Array.from(opts);
+    return q;
+  }
+
+  // --- 遊戲狀態 ---
+  let gameState = {
+    score: 0,
+    timer: 90,
+    totalTime: 90,
+    combo: 0,
+    maxCombo: 0,
+    correctCount: 0, // 新增：記錄答對題數
+    interval: null,
+    playerName: "",
+    currentQuestion: null
+  };
+
+  let leaderboard = []; 
+
+  // --- 初始化 ---
+  window.onload = function(){
+    loadLeaderboard();
+    renderLeaderboard();
+  };
+
+  function showStartScreen(){
+    pauseBGM();
+    document.getElementById('start-screen').classList.remove('hidden');
+    document.getElementById('game-screen').classList.add('hidden');
+    document.getElementById('result-screen').classList.add('hidden');
+    document.getElementById('pause-overlay').classList.add('hidden');
+    renderLeaderboard();
+  }
+
+  function startGameAction(){
+    const nameInput = document.getElementById('player-name').value.trim();
+    if(!nameInput){
+      alert("請輸入倖存者代號！");
+      return;
+    }
+    gameState.playerName = nameInput;
+    gameState.totalTime = 90; // 固定 90 秒
+    startGame();
+  }
+
+  function startGame(){
+    // 啟動 BGM
+    playSound('bgm');
+
+    gameState.score = 0;
+    gameState.combo = 0;
+    gameState.maxCombo = 0;
+    gameState.correctCount = 0;
+    gameState.timer = gameState.totalTime; // 確保每次重新開始時時間歸零重置
+
+    document.getElementById('start-screen').classList.add('hidden');
+    document.getElementById('result-screen').classList.add('hidden');
+    document.getElementById('game-screen').classList.remove('hidden');
+
+    updateHUD();
+    
+    if(gameState.interval) clearInterval(gameState.interval);
+    gameState.interval = setInterval(gameLoop, 1000);
+
+    loadQuestion();
+  }
+
+  function gameLoop(){
+    gameState.timer--;
+    updateHUD();
+    if(gameState.timer <= 0){
+      endGame();
+    }
+  }
+
+  function updateHUD(){
+    document.getElementById('score-display').innerText = gameState.score;
+    document.getElementById('correct-display').innerText = gameState.correctCount;
+    const timerEl = document.getElementById('timer-display');
+    timerEl.innerText = gameState.timer;
+    
+    // 進度條 (改為時間進度)
+    const timeProgress = (gameState.timer / gameState.totalTime) * 100; 
+    document.getElementById('progress-fill').style.width = timeProgress + "%";
+
+    if(gameState.timer < 10 && gameState.timer > 0){
+      timerEl.parentElement.classList.add('bg-red-900','border-red-500','animate-pulse');
+    }else{
+      timerEl.parentElement.classList.remove('bg-red-900','border-red-500','animate-pulse');
+    }
+
+    const comboEl = document.getElementById('combo-display');
+    document.getElementById('combo-count').innerText = gameState.combo;
+    if(gameState.combo > 1){
+      comboEl.classList.remove('opacity-0');
+      comboEl.classList.add('combo-text');
+      setTimeout(() => comboEl.classList.remove('combo-text'), 300);
+    }else{
+      comboEl.classList.add('opacity-0');
+    }
+  }
+
+  // --- 特效函數 ---
+  function showFloatingEffect(text, color) {
+    const container = document.getElementById('effect-container');
+    const el = document.createElement('div');
+    el.className = `absolute text-3xl font-bold ${color} animate-float-up`;
+    el.style.left = '50%';
+    el.style.top = '50%';
+    el.innerText = text;
+    container.appendChild(el);
+    setTimeout(() => el.remove(), 1000);
+  }
+
+  function triggerShake() {
+    const panel = document.getElementById('question-panel');
+    panel.classList.remove('animate-shake');
+    void panel.offsetWidth; // 觸發重繪
+    panel.classList.add('animate-shake');
+  }
+
+  // --- SVG 繪圖核心 ---
+  function renderShape(q){
+    const box = document.getElementById('question-image');
+    const colors = {
+      stroke: "#a8a29e", 
+      fillMain: "rgba(217, 119, 6, 0.15)", 
+      fillSide: "rgba(120, 113, 108, 0.25)", 
+      lineDash: "rgba(168, 162, 158, 0.4)"
+    };
+
+    const svgStart = `<svg viewBox="0 0 200 140" class="w-full h-auto drop-shadow-md max-w-[280px]">`;
+    const svgEnd = `</svg>`;
+
+    const shapes = {
+      trapezoid_prism: () => `
+        <path d="M60,40 L140,40 L160,70 L40,70 Z" fill="${colors.fillSide}" stroke="${colors.stroke}" stroke-width="2"/>
+        <path d="M40,70 L40,120 L160,120 L160,70" fill="${colors.fillMain}" stroke="${colors.stroke}" stroke-width="2"/>
+        <path d="M60,40 L60,90 L40,120" fill="none" stroke="${colors.stroke}" stroke-width="2"/>
+        <path d="M140,40 L140,90 L160,120" fill="none" stroke="${colors.stroke}" stroke-width="2"/>
+        <line x1="160" y1="120" x2="60" y2="90" stroke="${colors.lineDash}" stroke-dasharray="4"/>
+        <line x1="60" y1="90" x2="140" y2="90" stroke="${colors.lineDash}" stroke-dasharray="4"/>
+      `,
+      square_prism_hole: () => `
+        <rect x="50" y="30" width="100" height="80" fill="${colors.fillMain}" stroke="${colors.stroke}" stroke-width="2"/>
+        <circle cx="100" cy="70" r="25" fill="#292524" stroke="${colors.stroke}" stroke-width="2"/>
+        <path d="M150,30 L170,40 L170,120 L150,110 Z" fill="${colors.fillSide}" stroke="${colors.stroke}" stroke-width="2"/>
+      `,
+      cylinder_full: () => `
+        <ellipse cx="100" cy="30" rx="40" ry="12" fill="${colors.fillSide}" stroke="${colors.stroke}" stroke-width="2"/>
+        <path d="M60,30 L60,110 A40,12 0 0,0 140,110 L140,30" fill="${colors.fillMain}" stroke="${colors.stroke}" stroke-width="2"/>
+        <ellipse cx="100" cy="110" rx="40" ry="12" fill="none" stroke="${colors.stroke}" stroke-width="2" stroke-dasharray="4 4"/>
+      `,
+      half_cylinder: () => `
+        <path d="M50,100 A50,20 0 0,1 150,100" fill="none" stroke="${colors.stroke}" stroke-width="2" stroke-dasharray="4"/>
+        <path d="M50,100 L150,100 L150,50 L50,50 Z" fill="${colors.fillMain}" stroke="${colors.stroke}" stroke-width="2"/>
+        <path d="M50,50 A50,20 0 0,1 150,50" fill="${colors.fillSide}" stroke="${colors.stroke}" stroke-width="2"/>
+        <line x1="50" y1="50" x2="50" y2="100" stroke="${colors.stroke}" stroke-width="2"/>
+        <line x1="150" y1="50" x2="150" y2="100" stroke="${colors.stroke}" stroke-width="2"/>
+      `,
+      cylinder_net: () => `
+        <rect x="30" y="50" width="140" height="60" fill="${colors.fillMain}" stroke="${colors.stroke}" stroke-width="2"/>
+        <circle cx="50" cy="30" r="15" fill="${colors.fillSide}" stroke="${colors.stroke}" stroke-width="2"/>
+        <circle cx="150" cy="30" r="15" fill="${colors.fillSide}" stroke="${colors.stroke}" stroke-width="2"/>
+      `,
+      triangular_prism: () => `
+        <polygon points="50,40 20,100 80,100" fill="${colors.fillSide}" stroke="${colors.stroke}" stroke-width="2"/>
+        <path d="M50,40 L150,20 L180,80 L80,100 Z" fill="${colors.fillMain}" stroke="${colors.stroke}" stroke-width="2"/>
+        <line x1="150" y1="20" x2="120" y2="80" stroke="${colors.stroke}" stroke-width="2" stroke-dasharray="4"/>
+        <line x1="180" y1="80" x2="120" y2="80" stroke="${colors.stroke}" stroke-width="2" stroke-dasharray="4"/>
+        <line x1="20" y1="100" x2="120" y2="80" stroke="${colors.stroke}" stroke-width="2" stroke-dasharray="4"/>
+      `,
+      cylinder_hollow: () => `
+        <ellipse cx="100" cy="30" rx="40" ry="12" fill="${colors.fillSide}" stroke="${colors.stroke}" stroke-width="2"/>
+        <ellipse cx="100" cy="30" rx="25" ry="8" fill="#292524" stroke="${colors.stroke}" stroke-width="2"/>
+        <path d="M60,30 L60,100 A40,12 0 0,0 140,100 L140,30" fill="${colors.fillMain}" stroke="${colors.stroke}" stroke-width="2"/>
+      `
+    };
+
+    const type = q.shape || "cylinder_full";
+    box.innerHTML = svgStart + (shapes[type] ? shapes[type]() : shapes.cylinder_full()) + svgEnd;
+  }
+
+  function loadQuestion(){
+    gameState.currentQuestion = generateDynamicQuestion(Math.random());
+    const q = gameState.currentQuestion;
+
+    document.getElementById('question-tag').innerHTML = `<i class="fas fa-microchip"></i> ${q.tag}`;
+    document.getElementById('question-text').innerText = q.text;
+    document.getElementById('question-detail').innerText = q.detail;
+
+    renderShape(q);
+
+    const optionsContainer = document.getElementById('options-container');
+    optionsContainer.innerHTML = '';
+
+    let currentOptions = [...q.options];
+    currentOptions.sort(() => Math.random() - 0.5);
+
+    currentOptions.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = "btn-sand w-full bg-stone-700 hover:bg-stone-600 text-amber-50 font-bold py-3 md:py-4 rounded-lg text-lg md:text-xl border border-stone-600 relative overflow-hidden group";
+      
+      const span = document.createElement('span');
+      span.className = "relative z-10 pointer-events-none"; 
+      span.innerText = opt;
+      btn.appendChild(span);
+
+      btn.onclick = () => checkAnswer(btn, opt, q.answer, q);
+      optionsContainer.appendChild(btn);
+    });
+  }
+
+  function checkAnswer(btnElement, selected, correct, qData){
+    const allBtns = document.getElementById('options-container').querySelectorAll('button');
+    allBtns.forEach(b => b.disabled = true);
+
+    const isRight = (selected == correct);
+
+    if(isRight){
+      playSound('correct');
+      btnElement.classList.add('correct-anim');
+      
+      const baseScore = 100;
+      const comboBonus = gameState.combo * 20;
+      const pointsEarned = baseScore + comboBonus;
+      gameState.score += pointsEarned;
+      
+      gameState.correctCount++; // 題數 +1
+      gameState.combo++;
+      if(gameState.combo > gameState.maxCombo) gameState.maxCombo = gameState.combo;
+
+      showFloatingEffect(`+${pointsEarned}`, 'text-emerald-400');
+
+    }else{
+      playSound('wrong');
+      btnElement.classList.add('wrong-anim');
+      triggerShake();
+      
+      allBtns.forEach(b => {
+        if(b.innerText == correct) b.classList.add('bg-emerald-900', 'border-emerald-500');
+      });
+
+      gameState.combo = 0;
+      showFloatingEffect('錯誤!', 'text-red-500');
+    }
+
+    updateHUD();
+
+    setTimeout(() => {
+      if(gameState.timer > 0){
+        loadQuestion();
+      }
+    }, 1200);
+  }
+
+  function togglePause(){
+    const overlay = document.getElementById('pause-overlay');
+    if(gameState.interval){
+      clearInterval(gameState.interval);
+      gameState.interval = null;
+      overlay.classList.remove('hidden');
+    }else{
+      gameState.interval = setInterval(gameLoop, 1000);
+      overlay.classList.add('hidden');
+    }
+  }
+
+  function exitGame(){
+    clearInterval(gameState.interval);
+    showStartScreen();
+  }
+
+  function endGame(){
+    clearInterval(gameState.interval);
+    gameState.interval = null;
+    pauseBGM();
+
+    document.getElementById('game-screen').classList.add('hidden');
+    document.getElementById('result-screen').classList.remove('hidden');
+
+    const isWin = gameState.correctCount >= 7;
+
+    const titleEl = document.getElementById('result-title');
+    const badgeEl = document.getElementById('result-badge');
+    const iconEl = document.getElementById('result-icon');
+    const descEl = document.getElementById('result-desc');
+    const replayBtn = document.getElementById('btn-replay');
+
+    if(isWin) {
+      playSound('win');
+      titleEl.innerText = "闖關成功";
+      titleEl.className = "text-3xl md:text-4xl font-bold text-amber-400 mb-2 tracking-wide";
+      descEl.innerText = "防護罩已成功重啟，並獲得榮耀徽章！";
+      badgeEl.classList.remove('hidden');
+      iconEl.className = "hidden"; // 隱藏一般圖示，改用徽章
+      replayBtn.innerHTML = '<i class="fas fa-redo"></i> 重新挑戰';
+    } else {
+      playSound('lose');
+      titleEl.innerText = "闖關失敗";
+      titleEl.className = "text-3xl md:text-4xl font-bold text-red-500 mb-2 tracking-wide";
+      descEl.innerText = `需要修復 7 個裝置，您只修復了 ${gameState.correctCount} 個，沙塵暴吞噬了基地。`;
+      badgeEl.classList.add('hidden');
+      iconEl.className = "fas fa-times-circle text-6xl text-red-500 mb-2 relative animate-pulse";
+      replayBtn.innerHTML = '<i class="fas fa-redo"></i> 再闖關一次';
+      replayBtn.classList.replace('bg-blue-700', 'bg-red-700');
+      replayBtn.classList.replace('hover:bg-blue-600', 'hover:bg-red-600');
+    }
+
+    document.getElementById('result-name').innerText = gameState.playerName;
+    document.getElementById('result-correct-count').innerText = gameState.correctCount;
+    document.getElementById('result-score').innerText = gameState.score;
+    document.getElementById('result-combo').innerText = gameState.maxCombo;
+
+    saveScore(gameState.playerName, gameState.correctCount, gameState.score, isWin);
+  }
+
+  function resetGame(){
+    const replayBtn = document.getElementById('btn-replay');
+    replayBtn.classList.replace('bg-red-700', 'bg-blue-700');
+    replayBtn.classList.replace('hover:bg-red-600', 'hover:bg-blue-600');
+    startGame();
+  }
+
+  // --- 排行榜數據存取 (LocalStorage) ---
+  function saveScore(name, correctCount, score, isWin){
+    const d = new Date();
+    // 修改：新增小時與分鐘 HH:mm
+    const dateStr = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+    
+    leaderboard.push({ 
+      name: name, 
+      correctCount: correctCount, 
+      score: score, 
+      status: isWin, 
+      date: dateStr 
+    });
+    
+    // 排序條件：先比分數，若分數一樣比答對題數
+    leaderboard.sort((a,b) => {
+      if(b.score !== a.score) return b.score - a.score;
+      return b.correctCount - a.correctCount;
+    });
+    
+    if(leaderboard.length > 10) leaderboard.pop(); // 保留前十名
+    
+    localStorage.setItem('scorchMazeScoresV2', JSON.stringify(leaderboard));
+    renderLeaderboard();
+  }
+
+  function loadLeaderboard(){
+    const saved = localStorage.getItem('scorchMazeScoresV2');
+    if(saved){
+      leaderboard = JSON.parse(saved);
+    } else {
+      leaderboard = []; 
+    }
+  }
+
+  function renderLeaderboard(){
+    const tbody = document.getElementById('leaderboard-body');
+    const msg = document.getElementById('no-record-msg');
+    
+    tbody.innerHTML = '';
+    
+    if(leaderboard.length === 0){
+      msg.classList.remove('hidden');
+      return;
+    } else {
+      msg.classList.add('hidden');
+    }
+
+    leaderboard.forEach((entry, index) => {
+      let icon = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '🏅';
+      let rowClass = index === 0 ? 'text-amber-400 font-bold bg-amber-950/40' : index < 3 ? 'text-stone-200' : 'text-stone-400';
+      let statusHtml = entry.status 
+        ? '<span class="text-emerald-400 text-xs font-bold border border-emerald-700/50 bg-emerald-900/30 px-2 py-0.5 rounded">成功</span>' 
+        : '<span class="text-red-400 text-xs font-bold border border-red-700/50 bg-red-900/30 px-2 py-0.5 rounded">失敗</span>';
+
+      const tr = document.createElement('tr');
+      tr.className = `hover:bg-stone-800/50 transition-colors ${rowClass}`;
+      tr.innerHTML = `
+        <td class="py-2.5 px-2 text-center text-lg">${icon}</td>
+        <td class="py-2.5 px-2 font-mono truncate max-w-[80px]" title="${entry.name}">${entry.name}</td>
+        <td class="py-2.5 px-2 text-center text-emerald-300 font-bold">${entry.correctCount}</td>
+        <td class="py-2.5 px-2 text-right">${entry.score}</td>
+        <td class="py-2.5 px-2 text-center">${statusHtml}</td>
+        <td class="py-2.5 px-2 text-right text-xs opacity-75">${entry.date}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+</script>
+
+</body>
+</html>
